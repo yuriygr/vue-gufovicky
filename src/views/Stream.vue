@@ -42,7 +42,7 @@
   </template>
 
   <card v-if="Object.keys(data).length == 0">
-    <card-header :title="$t('stream.title')">
+    <card-header :title="t('stream.title')">
         <template #before>
           <card-button icon_before="arrow-back-bold" size="s" mode="secondary" component="router-link" :to="{ name: 'streams' }" active-class="" exact-active-class="" />
         </template>
@@ -50,21 +50,25 @@
 
     <placeholder-loading v-if="loading" />
     <placeholder v-else
-      :text="$t('stream.error.not_found')"
+      :text="t('stream.error.not_found')"
     />
   </card>
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
-import { mapState } from 'vuex'
 import { Spacer, Placeholder, PlaceholderLoading, ButtonsGroup } from '@vue-norma/ui'
 
 import { StreamItem } from '@/components/stream'
 import { StreamLinkItem, StreamLinkItemWrapper, StreamLinksList } from '@/components/stream-link'
+import { useStreamStore } from '@/app/store/modules/streams'
+import { useHumanizeError } from '@/app/composables/useHumanizeError'
+import { useMeta } from '@/app/composables/useMeta'
+import { useI18n } from 'vue-i18n'
 
 let AddStreamLinkModal = defineAsyncComponent(() => import("@/modals/AddStreamLink.vue"))
-let ReportStreamModal = defineAsyncComponent(() => import("@/modals/Report.vue"))
+let ReportModal = defineAsyncComponent(() => import("@/modals/Report.vue"))
 
 export default {
   name: 'stream',
@@ -79,11 +83,15 @@ export default {
     StreamItem,
     StreamLinkItem, StreamLinkItemWrapper, StreamLinksList
   },
-  computed: {
-    ...mapState('stream', [ 'data', 'loading', 'error' ]),
-    humanizeError(error) {
-      return this.$filters.humanizeError(error)
-    }
+  setup() {
+    const { t } = useI18n()
+    const store = useStreamStore()
+    const humanizeError = useHumanizeError()
+    const { data, loading, error, isEmpty } = storeToRefs(store)
+
+    const { setTitle } = useMeta(() => ({ title: t('stream.title') }))
+
+    return { t, store, humanizeError, data, loading, error, isEmpty, setTitle }
   },
   methods: {
     reportStream(reason = 0) {
@@ -118,11 +126,11 @@ export default {
   watch: {
     'data'(to) {
       if (to)
-        this.meta.title = to.title
+        this.setTitle(to.title)
     },
     '$route.params.uuid'(to, from) {
       if (to != from) {
-        this.$store.dispatch('stream/fetch', to)
+        this.store.fetch(to)
       }
     }
   }
