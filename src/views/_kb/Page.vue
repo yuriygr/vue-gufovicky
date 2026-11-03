@@ -1,6 +1,6 @@
 <template>
   <card>
-    <card-header :title="meta.title">
+    <card-header :title="data.title">
       <template #before>
         <card-button icon_before="arrow-back-bold" size="s" mode="secondary" component="router-link" :to="{ name: 'kb-menu' }" />
       </template>
@@ -14,7 +14,7 @@
     <template v-if="Object.keys(data).length == 0">
       <placeholder-loading v-if="loading" />
       <placeholder v-else
-        :text="$t('kb.error.empty_page')"
+        :text="t('kb.error.empty_page')"
       />
     </template>
   </card>
@@ -22,8 +22,14 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
 import { Placeholder, PlaceholderLoading } from '@vue-norma/ui'
+
+import { useKBPageStore } from '@/app/store/modules/kb'
+import { useModals } from '@vue-norma/ui'
+import { useHumanizeError } from '@/app/composables/useHumanizeError'
+import { useMeta } from '@/app/composables/useMeta'
+import { useI18n } from 'vue-i18n'
 
 let CorrectPageModal = defineAsyncComponent(() => import("@/modals/CorrectPage.vue"))
 
@@ -38,44 +44,47 @@ export default {
   components: {
     Placeholder, PlaceholderLoading
   },
-  meta() { return this.meta },
-  data() {
-    return {
-      meta: {
-        title: false
-      }
-    }
+  setup() {
+    const store = useKBPageStore()
+    const modals = useModals()
+    const { t } = useI18n()
+    const humanizeError = useHumanizeError()
+    
+    const { setTitle } = useMeta(() => ({ title: t('kb.title') }))
+
+    return { t, store, modals, humanizeError, setTitle}
   },
   computed: {
-    ...mapState('kb-page', [ 'data', 'loading', 'error' ]),
-    humanizeError(error) {
-      return this.$filters.humanizeError(error)
-    }
+    ...mapState(useKBPageStore, {
+      data: (store) => store.data,
+      loading: (store) => store.loading,
+      error: (store) => store.error,
+    }),
   },
   methods: {
     openCorrectPageModal() {
-      this.$modals.show(CorrectPageModal, {
+      this.modals.show(CorrectPageModal, {
         data: this.data
       }) 
     },
   },
   async mounted() {
-    this.$store.dispatch('kb-page/fetch', this.uuid)
+    this.store.fetch(this.uuid)
   },
   unmounted() {
-    this.$store.dispatch('kb-page/clear')
+    this.store.clear()
   },
   watch: {
     'data'(to) {
       if (to)
-        this.meta.title = to.title
+        this.setTitle(to.title)
     },
     '$route.params.uuid'(to, from) {
       if (typeof to == 'undefined') {
         return
       }
       if (to != from) {
-        this.$store.dispatch('kb-page/fetch', to)
+        this.store.fetch(to)
       }
     }
   }
