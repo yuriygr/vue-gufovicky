@@ -1,0 +1,13 @@
+html {
+  --x-background: #6ad94a;
+  --x-color: #212529;
+
+  --x-box-shadow--4: inset -2px -4px #0006, inset 2px 2px #FFF7; 
+  --x-box-shadow--6: inset -2px -2px rgba(0, 0, 0, 0.5), inset 2px 2px rgba(255, 255, 255, 0.5); 
+}
+
+// // Темная тема
+// html[data-theme="black"] {
+//   --x-background: #111;
+//   --x-color: #fffcea;
+// }

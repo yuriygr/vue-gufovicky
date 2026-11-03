@@ -1,0 +1,1 @@
+export { default as ClipItem } from '@/components/clip/Item'

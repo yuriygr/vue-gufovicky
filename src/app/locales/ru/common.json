@@ -1,0 +1,192 @@
+{
+  "app": {
+    "title": "Гуфовский",
+    "description": "",
+    "version": "Версия {version}",
+    "locale": {
+      "ru": "Русский"
+    },
+    "theme": {
+      "white": "Светлая тема",
+      "black": "Темная тема"
+    }
+  },
+  "tabbar": {
+    "home": "@:home.title",
+    "streams": "@:streams.title",
+    "clips": "@:clips.title",
+    "kb": "@:kb.title"
+  },
+  "home": {
+    "title": "Главная",
+    "watch": "Смотреть",
+    "links_primary": {
+      "title": "Основные ссылки",
+      "subtitle": "Тут он бывает чаще всего"
+    },
+    "links_support": {
+      "title": "Поддержать стримера",
+      "subtitle": "Все деньги пойдут на создание контента"
+    },
+    "links_youtube": {
+      "title": "Ютуб каналы",
+      "subtitle": "И вовсе они не заброшены"
+    },
+    "last_streams": {
+      "title": "Недавние трансляции",
+      "subtitle": "Нет, их просто мало"
+    },
+    "errors": {
+      "entries_empty": "Постов пока-что нет"
+    }
+  },
+  "streams": {
+    "title": "Архив стримов",
+    "action": {
+      "add_stream": "Добавить стрим"
+    },
+    "error": {
+      "empty_list": "Список стримов пуст"
+    }
+  },
+  "clips": {
+    "title": "Клипы",
+    "action": {
+      "add_clip": "Добавить клип"
+    },
+    "error": {
+      "empty_list": "Список клипов пуст"
+    }
+  },
+  "kb": {
+    "title": "База знаний",
+    "app": {
+      "title": "О приложении",
+      "version": "Версия {version}",
+      "item": {
+        "user-agreement": "Пользовательское соглашение",
+        "privacy": "Политика конфиденциальности",
+        "legal": "Правовая информация",
+        "data-security": "Защита данных"
+      },
+      "refresh": "Обновить приложение"
+    },
+    "action": {
+      "report": "Жалоба"
+    },
+    "error": {
+      "empty_list": "Список разделов пуст",
+      "empty_page": "Такого раздела не существует"
+    }
+  },
+  "stream": {
+    "title": "Стрим",
+    "links": "Ссылки",
+    "comments": "Комментарии",
+    "link": {
+      "vk": "VK",
+      "youtube": "YouTube",
+      "twitch": "Twitch",
+      "yandex": "Яндекс Диск"
+    },
+    "meta": {
+      "duration": "Продолжительность: {duration}",
+      "game_name": "{game_name}",
+      "started_at": "{started_at}",
+      "viewer_count": "Зрителей: {count}"
+    },
+    "action": {
+      "add_link": "Добавить ссылку",
+      "report": "Жалоба"
+    },
+    "error": {
+      "not_found": "Такой стрим не найден",
+      "no_links": "Сссылки на записи не найдены",
+      "comments_disabled": "Комментарии отключены"
+    }
+  },
+  "errors": {
+    "todo": {
+      "icon": "ghost-line",
+      "title": "На стадии разработки",
+      "description": "Данная фича еще недоступна и находится на стадии разработки. Или может дело в Плюсе..."
+    },
+    "method_not_allowed": {
+      "icon": "cloud-off-line",
+      "title": "Метод недоступен",
+      "description": "Возможно, разработчики допустили ошибку и так быть не должно"
+    },
+    "unauthorized": {
+      "icon": "spy-line",
+      "title": "Доступ запрещен",
+      "description": "Для просмотра содержимого необходимо авторизироваться"
+    },
+    "bad_request": {
+      "icon": "user-line",
+      "title": "Плохой запрос",
+      "description": "Вероятнее всего, вы что-то сделали не так и сервер вас не понял"
+    },
+    "network_error": {
+      "icon": "cloud-off-line",
+      "title": "Ошибка соединения",
+      "description": "Вероятнее всего, сервер недоступен или просто не хочет разговаривать"
+    },
+    "invalid_connection": {
+      "icon": "cloud-off-line",
+      "title": "Некорректное соединения",
+      "description": "Вероятнее всего, сервер недоступен или просто не хочет разговаривать"
+    },
+    "timeout_exceeded": {
+      "icon": "cloud-off-line",
+      "title": "Сервер очень долго не отвечал",
+      "description": "Вероятнее всего, сервер недоступен или просто не хочет разговаривать"
+    },
+    "empty_streams": {
+      "icon": "cloud-off-line",
+      "title": "Опаньки, кажется, стримов никогда и не было",
+      "description": "Да шуткую, были они, сам видел. Видимо, при загрузке списка произошла ошибка"
+    }
+  },
+  "action": {
+    "send": "Отправить",
+    "back": "Вернуться",
+    "apply": "Применить",
+    "save": "Сохранить",
+    "go_away": "Перейти",
+    "send_link": "Отправить ссылку",
+    "save_entry": "Сохранить",
+    "send_report": "Отправить жалобу",
+    "load_more": "Загрузить еще",
+    "show_more": "Смотреть все",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "delete": "Удалить",
+    "refresh": "Обновить",
+    "options": "Опции",
+    "attach_image": "Прикрепить изображение"
+  },
+  "modals": {
+    "add-stream": {
+      "title": "Добавить стрим",
+      "help": "Принимаются только ссылки на платформу Twitch",
+      "link": "Ссылка"
+    },
+    "add-stream-link": {
+      "title": "Добавить ссылку",
+      "help": "Можете указать ссылку на запись стрима на таких площадках как ВК Видео или YouTube",
+      "link": "Ссылка"
+    },
+    "add-clip": {
+      "title": "Добавить клип",
+      "help": "Принимаются только ссылки на платформу Twitch",
+      "link": "Ссылка"
+    },
+    "correct-page": {
+      "title": "Изменить информацию",
+      "help": "Если считаете что информация некорректна или не полная - напишите как правильно"
+    },
+    "report-stream": {
+      "title": "Пожаловаться на стрим"
+    }
+  }
+}

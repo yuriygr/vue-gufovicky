@@ -1,0 +1,47 @@
+.platform-vk {
+  --platform--background: linear-gradient(45deg, #0077FF 33%, #1280fd 66%, #0077FF);
+  --platform--border-color: #0167dc;
+  --platform--color: #0077FF;
+}
+
+.platform-twitch {
+  --platform--background: linear-gradient(45deg, #4b367c 33%, #6441a4 66%, #4b367c);
+  --platform--border-color: #3c2371;
+  --platform--color: #4b367c;
+}
+
+.platform-yandex {
+  --platform--background: linear-gradient(45deg, #fb6125 33%, #fd3f1d 66%, #fb6125);
+  --platform--border-color: #fd3f1d;
+  --platform--color: #fb6125;
+}
+
+.platform-donationalerts {
+  --platform--background: linear-gradient(45deg, #f48038 33%, #eb9058 66%, #f48038);
+  --platform--border-color: #e96716;
+  --platform--color: #f48038;
+}
+
+.platform-telegram {
+  --platform--background: linear-gradient(45deg, #08c 33%, rgb(31, 153, 215) 66%, #08c);
+  --platform--border-color: rgb(4, 111, 164);
+  --platform--color: #08c;
+}
+
+.platform-youtube {
+  --platform--background: linear-gradient(45deg, #c00c0c 33%, #dc3232 66%, #c00c0c);
+  --platform--border-color: rgb(182, 10, 10);
+  --platform--color: #c00c0c;
+}
+
+.platform-boosty {
+  --platform--background: linear-gradient(45deg, #F15F2C 33%, #ef764a 66%, #F15F2C);
+  --platform--border-color: #c84212;
+  --platform--color: #F15F2C;
+}
+
+.platform-memealerts {
+  --platform--background: linear-gradient(45deg, #F99B01 33%, #f2a934 66%, #F99B01);
+  --platform--border-color: #dc8a06;
+  --platform--color: #F99B01;
+}

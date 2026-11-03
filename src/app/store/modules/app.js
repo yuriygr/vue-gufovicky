@@ -1,0 +1,83 @@
+import { defineStore } from 'pinia'
+import { computed, ref, watch } from 'vue'
+
+/**
+ * Основной store приложения, который я планирую реиспользовать в других пет-проектах.
+ * Данные по умолчанию берутся из файла окружения
+ *
+ * @version 2.0.0
+ */
+export const useAppStore = defineStore('app', () => {
+  // ─── State ───────────────────────────────────────────────────────────────────
+
+  const title    = ref(process.env.VUE_APP_TITLE)
+  const basePath = ref(process.env.VUE_APP_BASE_URL)
+  const version  = ref(process.env.PACKAGE_VERSION)
+
+  const theme   = ref(getStoredOrDefault('theme', process.env.VUE_APP_DEFAULT_THEME))
+  const density = ref(getStoredOrDefault('density', process.env.VUE_APP_DEFAULT_DENSITY))
+  const locale  = ref(getStoredOrDefault('locale', process.env.VUE_APP_I18N_LOCALE))
+  const zen     = ref(getStoredOrDefault('zen', process.env.VUE_APP_DEFAULT_ZEN === 'true', true))
+
+  const cachedComponents = ref([])
+
+  // ─── Persist ─────────────────────────────────────────────────────────────────
+
+  watch(theme,   val => localStorage.setItem('theme',   val))
+  watch(density, val => localStorage.setItem('density', val))
+  watch(locale,  val => localStorage.setItem('locale',  val))
+  watch(zen,     val => localStorage.setItem('zen',     val))
+
+  // ─── Getters ─────────────────────────────────────────────────────────────────
+
+  const themeStatusBar = computed(() => {
+    const colors = { white: '#6ad94a',  black: '#6ad94a' }
+    return colors[theme.value]
+  })
+
+  const themes    = computed(() => ['white', 'black', 'void'])
+  const densities = computed(() => ['compact', 'default', 'spacious'])
+
+  // ─── Helpers ─────────────────────────────────────────────────────────────────
+
+  function getStoredOrDefault(key, defaultValue, parse = false) {
+    const stored = localStorage.getItem(key)
+    if (stored === null) return defaultValue
+    return parse ? JSON.parse(stored) : stored
+  }
+
+  // ─── Actions ─────────────────────────────────────────────────────────────────
+
+  function setTheme(payload)   { theme.value   = payload }
+  function setLocale(payload)  { locale.value  = payload }
+  function setDensity(payload) { density.value = payload }
+  function setZen(payload)     { zen.value = payload }
+
+  function addCachedComponent(componentName) {
+    if (!cachedComponents.value.includes(componentName)) {
+      cachedComponents.value.push(componentName)
+    }
+  }
+
+  function removeCachedComponent(componentName) {
+    cachedComponents.value = cachedComponents.value.filter(
+      name => name !== componentName
+    )
+  }
+
+  function resetCachedComponents() {
+    cachedComponents.value = []
+  }
+
+  return {
+    // state
+    title, basePath, version,
+    theme, density, locale, zen,
+    cachedComponents,
+    // getters
+    themeStatusBar, themes, densities,
+    // actions
+    setTheme, setLocale, setDensity, setZen,
+    addCachedComponent, removeCachedComponent, resetCachedComponents,
+  }
+})
