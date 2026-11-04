@@ -15,7 +15,7 @@
   <online-thumb v-if="status_data.status == 'Online'" :data="status_data.data" />
 
   <card v-for="(items, key) in links_data" :key="`links-${key}`"> 
-    <card-header :title="$t(`home.links_${key}.title`)" :subtitle="$t(`home.links_${key}.subtitle`)" />
+    <card-header :title="t(`home.links_${key}.title`)" :subtitle="t(`home.links_${key}.subtitle`)" />
 
     <links-list>
       <template v-for="(item, index) in items" :key="`links-${key}-${index}`">
@@ -24,38 +24,48 @@
     </links-list>
   </card>
 
-  <card v-if="(!streams_loading && !streams_error) || streams_data.length > 0">
-    <card-header :title="$t('home.last_streams.title')" :subtitle="$t('home.last_streams.subtitle')" />
+  <card>
+    <card-header :title="t('home.last_streams.title')" :subtitle="t('home.last_streams.subtitle')" />
  
-    <streams-list>
-      <stream-item-wrapper v-for="item in streams_data" :key="`stream-${item.uuid}`">
-        <stream-item :data="item" />
-      </stream-item-wrapper>
+    <items-list type="streams" v-if="streams_data.length > 0 || streams_loading" :has-data="streams_data.length > 0" :loading="streams_loading" :has-more="false">
+      <stream-item v-for="item in streams_data" :key="`stream-${item.uuid}`" :data="item" />
 
-      <card-button component="router-link" :stretched="true" active-class="" exact-active-class="" :to="{ name: 'streams' }">
-        {{ $t('action.show_more') }}
-      </card-button>
-    </streams-list>
+      <template #skeleton>
+        <stream-item v-for="index in 5" :key="`item-${index}`" />
+      </template>
+    </items-list>
+
+    <placeholder v-else-if="streams_error"
+      :icon="humanizeError(streams_error).icon"
+      :header="humanizeError(streams_error).title"
+      :text="humanizeError(streams_error).description"
+    />
+    <placeholder v-else :text="t('streams.error.empty_list')" />
+
+    <card-button component="router-link" :stretched="true" active-class="" exact-active-class="" :to="{ name: 'streams' }">
+      {{ t('action.show_more') }}
+    </card-button>
   </card>
 </template>
 
 <script>
 import { mapState } from 'pinia'
-import { Spacer } from '@vue-norma/ui'
+import { Placeholder, Spacer } from '@vue-norma/ui'
 
 import { LinksList, LinkItem } from '@/components/links'
-import { StreamsList, StreamItem, StreamItemWrapper, OnlineThumb } from '@/components/stream'
+import { StreamItem, OnlineThumb } from '@/components/stream'
 
 import { useStreamStatusStore, useStreamsStore } from '@/app/store/modules/streams'
 import { useLinksStore } from '@/app/store/modules/links'
+import { useHumanizeError } from '@/app/composables/useHumanizeError'
 import { useMeta } from '@/app/composables/useMeta'
 import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'home',
   components: {
-    Spacer,
-    StreamsList, StreamItem, StreamItemWrapper, OnlineThumb,
+    Placeholder, Spacer,
+    StreamItem, OnlineThumb,
     LinksList, LinkItem
   },
   setup() {
@@ -63,10 +73,11 @@ export default {
     const streamsStore = useStreamsStore()
     const streamStatusStore = useStreamStatusStore()
     const { t } = useI18n()
+    const humanizeError = useHumanizeError()
 
     useMeta(() => ({ title: t('home.title') }))
 
-    return { t, linksStore, streamsStore, streamStatusStore }
+    return { t, linksStore, streamsStore, streamStatusStore, humanizeError }
   },
   computed: {
     ...mapState(useLinksStore, {
