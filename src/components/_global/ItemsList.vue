@@ -37,7 +37,7 @@ const props = defineProps({
 
   & > *:not(:last-child) {
     position: relative;
-    margin-bottom: var(--m-size, 1.5rem);
+    margin-bottom: var(--m-size, 2.5rem);
   }
 }
 </style>

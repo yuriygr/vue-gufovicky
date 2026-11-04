@@ -10,7 +10,7 @@
       <stream-item v-for="item in data" :key="`stream-${item.uuid}`" :data="item" />
 
       <template #skeleton>
-        <stream-item v-for="index in 15" :key="`item-${index}`" />
+        <stream-item v-for="index in 5" :key="`item-${index}`" />
       </template>
     </items-list>
 

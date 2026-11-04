@@ -29,17 +29,15 @@
   <template v-else>
     <div :class="[ 'stream-item' ]">
       <div class="stream-item__content">
-        <router-link class="stream-item__title" tag="div">
+        <div class="stream-item__title">
           <skeleton :width="skeletonWidths.title" :height="9" />
-        </router-link>
+        </div>
         <div class="stream-item__hashtags">
           <div class="hashtag hashtag--disabled"><skeleton :width="skeletonWidths.hashtag" :height="9" /></div>
         </div>
       </div>
       <div class="stream-item__meta">
-        <skeleton :width="skeletonWidths.q" :height="9" />
-        <skeleton :width="skeletonWidths.w" :height="9" />
-        <skeleton :width="skeletonWidths.e" :height="9" />
+        <skeleton :width="skeletonWidths.meta" :height="9" />
       </div>
     </div>
   </template>
@@ -63,10 +61,8 @@ export default {
     return {
       skeletonWidths: {
         title: Math.floor(Math.random() * 100) + 220,
-        hashtag: Math.floor(Math.random() * 100) + 200,
-        q: Math.floor(Math.random() * 100) + 200,
-        w: Math.floor(Math.random() * 100) + 200,
-        e: Math.floor(Math.random() * 100) + 80
+        hashtag: Math.floor(Math.random() * 100) + 20,
+        meta: Math.floor(Math.random() * 100) + 40
       }
     }
   },
